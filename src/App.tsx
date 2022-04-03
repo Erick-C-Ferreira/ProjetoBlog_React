@@ -5,7 +5,7 @@ import NavBar from './components/estaticos/NavBar/NavBar'
 import Footer from './components/estaticos/Footer/Footer'
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
-import Cadastro from './pages/Cadastro/Cadastro'
+import CadastroUsuario from './pages/CadastroUsuario/CadastroUsuario'
 import './App.css';
 
 function App() {
@@ -28,8 +28,8 @@ function App() {
             <Home />
           </Route>
 
-          <Route path="/cadastro">
-            <Cadastro />
+          <Route path="/cadastro-usuario">
+            <CadastroUsuario />
           </Route>
         </div>
       </Switch>
