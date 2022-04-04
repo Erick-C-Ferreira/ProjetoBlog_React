@@ -14,7 +14,7 @@ function CadastroUsuario() {
         {
             id: 0,
             nome: '',
-            usuario: '',            
+            usuario: '',
             senha: '',
             foto: ''
 
@@ -32,7 +32,7 @@ function CadastroUsuario() {
 
     useEffect(() => {
         if (userResult.id != 0) {
-            history.push("/login")            
+            history.push("/login")
         }
     }, [userResult])
 
@@ -48,13 +48,23 @@ function CadastroUsuario() {
             ...user,
             [e.target.name]: e.target.value
         })
-
     }
+
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
-        e.preventDefault()
-        if (confirmarSenha == user.senha && user.senha.length >= 8) {
-            cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult)
-            alert('Usuario cadastrado com sucesso')
+        e.preventDefault()                                     // previne o recarregamento da pagina
+        if (confirmarSenha == user.senha && user.senha.length >= 8) { // indica se o campo confirmar senha é igual ao campo senha e se tbm tem + que 8 digitos.
+
+            try {
+                await cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult) // o try catch é uma validação a mais e serve até para evitar possiveis erros.
+                alert('Usuario cadastrado com sucesso')
+
+            } catch (error) {
+                console.log(`Error: ${error}`)
+
+                alert("Usuário já existente")
+
+            }
+
         } else {
             alert('Dados inconsistentes. Favor verificar as informações de cadastro.')
         }
@@ -67,11 +77,12 @@ function CadastroUsuario() {
                 <Box paddingX={10}>
                     <form onSubmit={onSubmit}>
                         <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' className='textos2'>Cadastrar</Typography>
-                        <TextField value={user.nome} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='nome' label='nome' variant='outlined' name='nome' margin='normal' fullWidth required/>
-                        <TextField value={user.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='usuario' label='usuario' variant='outlined' name='usuario' margin='normal' fullWidth required/>
-                        <TextField value={user.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password' fullWidth required/>
-                        <TextField value={confirmarSenha} onChange={(e: ChangeEvent<HTMLInputElement>) => confirmarSenhaHandle(e)} id='confirmarSenha' label='confirmar Senha' variant='outlined' name='confirmarSenha' margin='normal' type='password' fullWidth required/>
-                        <TextField id='foto' label='foto' variant='outlined' name= 'foto' margin='normal' fullWidth/>
+                        <TextField value={user.nome} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='nome' label='nome' variant='outlined' name='nome' margin='normal' fullWidth required />
+                        <TextField value={user.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='usuario' label='usuario' variant='outlined' name='usuario' margin='normal' type='email' fullWidth required />
+                        <TextField value={user.foto} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='foto' label='foto' variant='outlined' name='foto' margin='normal' fullWidth />
+                        <TextField value={user.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password' placeholder='Insira uma senha com no minimo 8 caracteres' fullWidth required />
+                        <TextField value={confirmarSenha} onChange={(e: ChangeEvent<HTMLInputElement>) => confirmarSenhaHandle(e)} id='confirmarSenha' label='confirmar Senha' variant='outlined' name='confirmarSenha' margin='normal' type='password' fullWidth required />
+
                         <Box marginTop={2} textAlign='center'>
                             <Link to='/login' className='text-decorator-none'>
                                 <Button variant='contained' color='secondary' className='botaoCancelar'>
