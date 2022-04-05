@@ -9,7 +9,31 @@ export const cadastroUsuario = async(url: any, dados: any, setDados: any) =>{
     setDados(resposta.data)
 }
 
-export const login = async(url: any, dados: any, setDados: any) =>{
+export const login = async(url: any, dados: any, setDados: any) =>{ 
     const resposta = await api.post(url, dados)
     setDados(resposta.data.token)
+}
+
+export const busca = async(url: any, setDados: any, header: any) =>{
+    const resposta = await api.get(url, header)
+    setDados(resposta.data)
+}
+
+export const buscaId = async(url: any, setDados: any, header: any) =>{ // metodo resposavel por buscar um elemento por ID.
+    const resposta = await api.get(url, header)
+    setDados(resposta.data)
+}
+
+export const post= async(url: any, dados: any, setDados: any, header: any) =>{ // metedo responsavel por fazer o cadastro das operações.
+    const resposta = await api.post(url, dados, header)
+    setDados(resposta.data)
+}
+
+export const put= async(url: any, dados: any, setDados: any, header: any) =>{ // metodo responsavel por fazer atualizações das operações.
+    const resposta = await api.put(url, dados, header)
+    setDados(resposta.data.token)
+}
+
+export const deleteId= async(url: any, header: any) =>{ // metodo responasvel por deletar os elementos tanto tema como postagem.
+    await api.delete(url, header)    
 }

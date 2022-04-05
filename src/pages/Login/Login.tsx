@@ -64,11 +64,9 @@ function Login() {
                             id='senha' label='Senha' variant='outlined' name='senha' margin='normal' fullWidth type='password' />
 
                         <Box marginTop={2} textAlign='center'>
-
                             <Button type='submit' variant='contained' color='primary'>
                                 Logar
                             </Button>
-
                         </Box>
                     </form>
                     <Box display='flex' justifyContent='center' marginTop={2}>
@@ -76,7 +74,7 @@ function Login() {
                             <Typography variant='subtitle1' gutterBottom align='center'> Não tem uma conta?</Typography>
                         </Box>
 
-                        <Link to='/cadastro-usuario'>
+                        <Link to='/cadastrousuario'>
                             <Typography variant='subtitle1' gutterBottom align='center' className='textos1'>Cadastre-se</Typography>
                         </Link>
                     </Box>
