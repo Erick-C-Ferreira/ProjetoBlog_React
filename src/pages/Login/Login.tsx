@@ -1,16 +1,20 @@
 import React, { useState, useEffect, ChangeEvent, } from 'react';
 import { Grid, Box, Typography, TextField, Button } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
-import useLocalStorage from 'react-use-localstorage';
 import { login } from '../../service/Service';
 import UserLogin from '../../model/UserLogin';
 import './Login.css';
+import { useDispatch } from 'react-redux';
+import { addToken } from '../../store/tokens/actions';
 
 function Login() {
 
     let history = useHistory(); // redireciona o usuário para determianda pagina
+    const dispatch = useDispatch()
+    const [token, setToken] = useState(''); // hooks que vão manipular o nosso Local Stotage para gravar o token no armazenamento local.
+   
 
-    const [token, setToken] = useLocalStorage("token"); // hooks que vão manipular o nosso Local Stotage para gravar o token no armazenamento local.
+    dispatch(addToken(token))
 
     const [userLogin, setUserLogin] = useState<UserLogin>({ //useState define como uma determinad variavel será inicializada quando o Comp.. for renderizado
         id: 0,
@@ -30,6 +34,7 @@ function Login() {
 
     useEffect(() => { // executa uma ação sempre que uma variavel seja mudada e dentro dele é executado uma ação ou função
         if (token != '') {
+            dispatch(addToken(token))
             history.push('/home')
         }
     }, [token]) // variavel que define a mudança de estado das chaves acima e redireciona para a /home

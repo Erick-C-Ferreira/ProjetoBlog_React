@@ -3,17 +3,20 @@ import { Container, Typography, TextField, Button, Select, InputLabel, MenuItem,
 import './CadastroPost.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Tema from '../../../model/Tema';
-import useLocalStorage from 'react-use-localstorage';
 import Postagem from '../../../model/Postagem';
 import { busca, buscaId, post, put } from '../../../service/Service';
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 
 function CadastroPost() {
     let history = useHistory();
     const { id } = useParams<{ id: string }>();
     const [temas, setTemas] = useState<Tema[]>([])
-    const [token, setToken] = useLocalStorage('token');
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+    );
 
-    useEffect(() => {
+    useEffect(() => { // neste useEffect serve para para verificar se esta logado, e caso nao estiver redireciona para tela de login
         if (token == "") {
             alert("Você precisa estar logado")
             history.push("/login")
@@ -33,21 +36,21 @@ function CadastroPost() {
         tema: null
     })
 
-    useEffect(() => { 
+    useEffect(() => { // verifica sempre qye houver alguma atualização no tema.
         setPostagem({
             ...postagem,
             tema: tema
         })
     }, [tema])
 
-    useEffect(() => {
+    useEffect(() => { // esse metodo funcionada para sempre que precise atualizar uma postagem. e verifica se a mudança do Id ocorreu 
         getTemas()
         if (id !== undefined) {
             findByIdPostagem(id)
         }
     }, [id])
 
-    async function getTemas() {
+    async function getTemas() {     // metodo verifica se esta logado antes de poder ver os temas.
         await busca("/temas", setTemas, {
             headers: {
                 'Authorization': token
@@ -77,19 +80,27 @@ function CadastroPost() {
         e.preventDefault()
 
         if (id !== undefined) {
-            put(`/postagens`, postagem, setPostagem, {
-                headers: {
-                    'Authorization': token
-                }
-            })
-            alert('Postagem atualizada com sucesso');
+            try {
+                await put(`/postagens`, postagem, setPostagem, {
+                    headers: {
+                        'Authorization': token
+                    }
+                })
+                alert('Postagem atualizada com sucesso');
+            } catch (error) {
+                alert("Erro ao atualizar, verifique os campos")
+            }
         } else {
-            post(`/postagens`, postagem, setPostagem, {
-                headers: {
-                    'Authorization': token
-                }
-            })
-            alert('Postagem cadastrada com sucesso');
+            try {
+                await post(`/postagens`, postagem, setPostagem, {
+                    headers: {
+                        'Authorization': token
+                    }
+                })
+                alert('Postagem cadastrada com sucesso');
+            } catch (error) {
+                alert("Erro ao cadastrar, verifique os campos")
+            }
         }
         back()
 
@@ -103,15 +114,15 @@ function CadastroPost() {
         <Container maxWidth="sm" className="topo">
             <form onSubmit={onSubmit}>
                 <Typography variant="h3" color="textSecondary" component="h1" align="center" >Formulário de cadastro postagem</Typography>
-                <TextField value={postagem.titulo} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)} id="titulo" label="titulo" variant="outlined" name="titulo" margin="normal" fullWidth />
-                <TextField value={postagem.texto} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)} id="texto" label="texto" name="texto" variant="outlined" margin="normal" fullWidth />
+                <TextField value={postagem.titulo} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)} id="titulo" label="titulo" variant="outlined" name="titulo" margin="normal" fullWidth placeholder='Minimo de 2 e Maximo de 100 caracteres'/>
+                <TextField value={postagem.texto} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)} id="texto" label="texto" name="texto" variant="outlined" margin="normal" fullWidth placeholder='Minimo de 2 e Maximo de 1.000 caracteres'/>
 
                 <FormControl >
                     <InputLabel id="demo-simple-select-helper-label">Tema </InputLabel>
                     <Select
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
-                        onChange={(e) => buscaId(`/temas/${e.target.value}`, setTema, {
+                        onChange={(e) => buscaId(`/temas/${e.target.value}`, setTema, { // aqui indica a rota do back que seria o /temas
                             headers: {
                                 'Authorization': token
                             }
