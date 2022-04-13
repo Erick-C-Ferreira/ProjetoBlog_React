@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import NavBar from './components/estaticos/NavBar/NavBar'
-import Footer from './components/estaticos/Footer/Footer'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import NavBar from './components/estaticos/navBar/NavBar';
+import Footer from './components/estaticos/Footer/Footer';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
-import CadastroUsuario from './pages/CadastroUsuario/CadastroUsuario'
+import CadastroUsuario from './pages/CadastroUsuario/CadastroUsuario';
 import './App.css';
 import ListaTema from './components/temas/listaTema/ListaTema';
 import ListaPostagens from './components/postagens/listaPostagem/ListaPostagem';
@@ -14,8 +14,8 @@ import DeletarPostagem from './components/postagens/deletarPostagem/DeletarPosta
 import DeletarTema from './components/temas/deletarTema/DeletarTema';
 import { Provider } from 'react-redux';
 import store from './store/store';
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
