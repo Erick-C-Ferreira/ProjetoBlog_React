@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import NavBar from './components/estaticos/navBar/NavBar';
-import Footer from './components/estaticos/Footer/Footer';
+import NavBar from './components/estaticos/navbar/NavBar';
+import Footer from './components/estaticos/footer/Footer';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import CadastroUsuario from './pages/CadastroUsuario/CadastroUsuario';
