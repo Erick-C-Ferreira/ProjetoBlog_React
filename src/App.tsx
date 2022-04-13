@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import NavBar from './components/estaticos/navbar/NavBar';
 import Footer from './components/estaticos/footer/Footer';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
@@ -22,7 +21,7 @@ function App() {
     <Provider store={ store }>  
       <ToastContainer />    
       <Router>
-        <NavBar />
+        
         <Switch>
           <div style={{ minHeight: '100vh' }}>
             <Route exact path="/">
