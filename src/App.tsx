@@ -15,13 +15,14 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NavBar from './components/estaticos/navbar/NavBar';
 
 function App() {
   return (
     <Provider store={ store }>  
       <ToastContainer />    
       <Router>
-        
+        <NavBar />
         <Switch>
           <div style={{ minHeight: '100vh' }}>
             <Route exact path="/">
