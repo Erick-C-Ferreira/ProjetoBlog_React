@@ -13,7 +13,7 @@ function Login() {
     let history = useHistory(); // redireciona o usuário para determianda pagina
     const dispatch = useDispatch()
     const [token, setToken] = useState(''); // hooks que vão manipular o nosso Local Stotage para gravar o token no armazenamento local.
-   
+
 
     dispatch(addToken(token))
 
@@ -43,7 +43,7 @@ function Login() {
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
         e.preventDefault()
         try {
-            await login(`/usuarios/logar`, userLogin, setToken)            
+            await login(`/usuarios/logar`, userLogin, setToken)
 
             toast.success('Usuário logado com sucesso', {
                 position: "top-right",
@@ -71,16 +71,16 @@ function Login() {
     }
 
     return (
-        <Grid container direction='row' justifyContent='center' alignItems='center'>
+        <Grid container direction='row' justifyContent='center' alignItems='center' color='black' className='lg1'> 
             <Grid alignItems='center' xs={6}>
                 <Box paddingX={20}>
                     <form onSubmit={onSubmit}>
-                        <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' className='textos1'>Entrar</Typography>
+                        <Typography variant='h3' gutterBottom color='textSecondary' component='h3' align='center' className='textos1'>Login</Typography>
 
                         <TextField
                             value={userLogin.usuario}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => { updatedModel(e) }}
-                            id='usuario' label='Usuário' variant='outlined' name='usuario' margin='normal' fullWidth />
+                            id='usuario' label='Usuário' variant='outlined' name='usuario' margin='normal' fullWidth placeholder='example@email.com'/>
 
                         <TextField
                             value={userLogin.senha}
@@ -88,7 +88,7 @@ function Login() {
                             id='senha' label='Senha' variant='outlined' name='senha' margin='normal' fullWidth type='password' />
 
                         <Box marginTop={2} textAlign='center'>
-                            <Button type='submit' variant='contained' color='primary'>
+                            <Button type='submit' variant='contained' color='inherit'>
                                 Logar
                             </Button>
                         </Box>
@@ -105,7 +105,7 @@ function Login() {
 
                 </Box>
             </Grid>
-            <Grid xs={6} className='img'>
+            <Grid xs={6} className='img'>               
 
             </Grid>
         </Grid>
